@@ -5,4 +5,5 @@ app.use(require('./vacantes'));
 app.use(require('./registrarEmpresa'));
 
 
+
 module.exports = app;

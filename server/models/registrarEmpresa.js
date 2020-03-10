@@ -3,6 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 let Schema = mongoose.Schema;
 
+
 let empresaSchema = new Schema({
     nombre: {
         type: String,

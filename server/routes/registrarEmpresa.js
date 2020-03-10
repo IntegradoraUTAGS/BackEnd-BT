@@ -5,6 +5,7 @@ const app = express();
 const { verificaToken } = require('../middlewares/autenticacion');
 const Empresa = require('../models/registrarEmpresa');
 
+
 app.get('/empresa', [verificaToken], (req, res) => {
     let desde = req.params.desde || 0;
     desde = Number(desde);
