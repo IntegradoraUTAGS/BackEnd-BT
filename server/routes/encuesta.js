@@ -1,11 +1,11 @@
 const express = require('express');
 const _ = require('underscore');
-const Vacante = require('../models/vacante');
+const Encuesta = require('../models/encuesta');
 const app = express();
 
 app.get('/obtener', (req, res) => {
-    Vacante.find()
-        .exec((err, vacante) => {
+    Encuesta.find()
+        .exec((err, encuesta) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -14,8 +14,8 @@ app.get('/obtener', (req, res) => {
             }
             return res.status(200).json({
                 ok: true,
-                count: vacante.length,
-                vacante
+                count: encuesta.length,
+                encuesta
             })
         });
 });
@@ -26,20 +26,24 @@ app.post('/registrar', (req, res) => {
     console.log(body);
 
 
-    let vacante = new Vacante({
-        perfil: body.perfil,
-        requiere: body.requiere,
-        horario: body.horario,
-        carrera: body.carrera,
-        prestaciones: body.prestaciones,
+    let encuesta = new Encuesta({
+        email: body.email,
+        nomEmpresa: body.nomEmpresa,
+        organizacion: body.organizacion,
+        tamanoOrg: body.tamanoOrg,
+        ubicacionEmpleo: body.ubicacionEmpleo,
         dirigidoA: body.dirigidoA,
         dirigidoPersona: body.dirigidoPersona,
         sueldo: body.sueldo,
-
-        idioma: body.idioma
+        conocimiento: body.conocimiento,
+        creatividad: body.creatividad,
+        nivelAcademico: body.nivelAcademico,
+        adaptarse: body.adaptarse,
+        satisfaccion: body.satisfaccion,
+        comentarios: body.comentarios
 
     });
-    vacante.save((err, vcDB) => {
+    encuesta.save((err, encuestaDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -48,7 +52,7 @@ app.post('/registrar', (req, res) => {
         }
         return res.status(200).json({
             ok: true,
-            vcDB
+            encuestaDB
         });
     });
 });
@@ -56,20 +60,24 @@ app.post('/registrar', (req, res) => {
 app.put('/actualizar', (req, res) => {
     let id = req.body.id;
     let body = _.pick(req.body, [
-        'perfil',
-        'requiere',
-        'horario',
-        'carrera',
-        'prestaciones',
-        'dirigido',
+        'email',
+        'nomEmpresa',
+        'organizacion',
+        'tamanoOrg',
+        'ubicacionEmpleo',
+        'dirigidoA',
         'dirigidoPersona',
         'sueldo',
-        'ubicacion',
-        'idioma',
-        'estado'
+        'conocimiento',
+        'creatividad',
+        'nivelAcademico',
+        'adaptarse',
+        'satisfaccion',
+        'comentarios'
+
     ]);
 
-    Prestamo.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, presDB) => {
+    encuesta.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, encuestaDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -78,7 +86,7 @@ app.put('/actualizar', (req, res) => {
         };
         return res.status(200).json({
             ok: true,
-            presDB
+            encuestaDB
         });
     });
 });
@@ -88,7 +96,7 @@ app.put('/actualizar', (req, res) => {
 
 app.delete('/eliminar', (req, res) => {
     let id = req.body.id;
-    Vacante.findByIdAndUpdate(id, { new: true, runValidators: true, context: 'query' }, (err, vcDB) => {
+    encuesta.findByIdAndUpdate(id, { new: true, runValidators: true, context: 'query' }, (err, encuestaDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -97,7 +105,7 @@ app.delete('/eliminar', (req, res) => {
         }
         return res.status(200).json({
             ok: true,
-            vcDB
+            encuestaDB
         });
     });
 });
