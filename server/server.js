@@ -18,15 +18,16 @@ app.use((req, res, next) => {
     next();
 });
 
+
 // parse aplication/x-www.form-uelencoded
 app.use(bodyparser.urlencoded({ extended: false }));
 
 //parse formato a application/json
 app.use(bodyparser.json());
 
+
 // Archivo agrupador de rutas
 app.use(require('./routes/index'));
-
 
 //Conexion a base de datos
 mongoose.connect(process.env.URLDB, {
