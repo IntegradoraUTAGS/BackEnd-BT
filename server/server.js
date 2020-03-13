@@ -30,7 +30,7 @@ app.use(bodyparser.json());
 app.use(require('./routes/index'));
 
 //Conexion a base de datos
-mongoose.connect(process.env.URLDB, {
+mongoose.connect('mongodb://localhost:27017/BolsaUTAGS', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true
