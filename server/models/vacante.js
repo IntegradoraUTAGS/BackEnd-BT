@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+cconst mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 
@@ -60,6 +60,12 @@ let vacanteSchema = new Schema({
         type: String,
 
     },
+    fecchaLimite: { //fecha
+        type: Date,
+
+    },
+
+
     estado: {
         type: Boolean,
         default: true

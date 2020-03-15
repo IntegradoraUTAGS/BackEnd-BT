@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
 
-app.use(require('./vacantes'));
+app.use('/vacantes', require('./vacantes'));
 // app.use(require('./registrarEmpresa'));
-app.use(require('./usuario'));
+app.use('/usuario', require('./usuario'));
 
 
 

@@ -11,3 +11,8 @@ if (process.env.NODE_ENV === 'dev') {
     urlDB = 'http://localhost:27017';
 }
 process.env.URLDB = urlDB;
+// FIRMA DE JWT
+process.env.SEED = process.env.SEED || 'firma-super-secreta';
+
+// //EXPIRE TIME JWT
+process.env.CADUCIDAD_TOKEN = process.env.CADUCIDAD_TOKEN || '3h';
