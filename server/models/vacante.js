@@ -3,68 +3,38 @@ let Schema = mongoose.Schema;
 
 
 let vacanteSchema = new Schema({
-    email: {
+    perfil: {
         type: String,
         required: [true, 'Por favor ingresa el nombre del email']
     },
-    nomEmpresa: {
+    requiere: {
         type: String,
         required: [true, 'Ingrese nombre de empresa']
     },
-    organizacion: { //opcion
+    horario: { //opcion
         type: String,
         required: [true, 'Por favor ingresa la hora del trabajo']
     },
-    tamanoOrg: { //opcion
+    prestaciones: { //opcion
         type: String,
 
     },
-    ubicacionEmpleo: {
+    dirigidoA: {
         type: String
     },
-    carrera: {
+    dirigidoPersona: {
         type: String
     },
-    nombreAlum: {
+    sueldo: {
         type: String
     },
-    perfilContrato: {
+    idioma: {
         type: String,
         required: [true, 'Por favor ingresa el sueldo del usuario']
     },
-    sueldo: { //opcion
-        type: Number,
-
-    },
-    conocimientos: { //OPCION
+    fechaLimite: { //opcion
         type: String,
-
     },
-    creatividad: { //opcion
-        type: String,
-
-    },
-    nivelAcademico: { //OPCION
-        type: String,
-
-    },
-    adaptarse: { //OPCION
-        type: String,
-
-    },
-    satisfaccion: { //opcion
-        type: String,
-
-    },
-    comentarios: { //opcion
-        type: String,
-
-    },
-    fecchaLimite: { //fecha
-        type: Date,
-
-    },
-
 
     estado: {
         type: Boolean,

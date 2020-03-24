@@ -35,8 +35,8 @@ app.post('/registrar', (req, res) => {
         dirigidoA: body.dirigidoA,
         dirigidoPersona: body.dirigidoPersona,
         sueldo: body.sueldo,
-
-        idioma: body.idioma
+        idioma: body.idioma,
+        fechaLimite: body.fechaLimite
 
     });
     vacante.save((err, vcDB) => {
