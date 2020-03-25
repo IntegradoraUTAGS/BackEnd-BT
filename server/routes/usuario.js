@@ -1,7 +1,8 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const express = require('express');
 const app = express();
+const Usuario = require('../models/usuario');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
 app.post('/login', (req, res) => {
@@ -23,6 +24,7 @@ app.post('/login', (req, res) => {
             return res.status(500).json({
                 ok: false,
                 err: {
+                    
                     message: 'El usuario y/o contraseña son incorrectos'
                 }
             });
@@ -36,6 +38,7 @@ app.post('/login', (req, res) => {
                 }
             });
         }
+
         // if (UsrDB.role != "ADMIN") {
         //     return res.status(500).json({
         //         ok: false,
