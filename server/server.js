@@ -50,5 +50,5 @@ mongoose.connect('mongodb+srv://Admin:BolsaUT123@cluster0-qgmkk.mongodb.net/Bols
     });
 
 app.listen(process.env.PORT, () => {
-    console.log('Escuchando por el puerto', process.env.PORT)
+    console.log('Escuchando por el puerto', process.env.PORT);
 });
