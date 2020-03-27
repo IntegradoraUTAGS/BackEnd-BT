@@ -2,10 +2,18 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const app = express();
+const { verificaToken } = require('../middlewares/autenticacion');
 const Empresa = require('../models/registrarEmpresa');
 
-app.get('/empresa', (req, res) => {
-    Empresa.find({ disponible: true })
+app.get('/empresa/obtener', (req, res) => {
+    let desde = req.params.desde || 0;
+    desde = Number(desde);
+
+    let limite = req.params.limite || 0;
+    limite = Number(limite);
+    Empresa.find({ estado: true })
+        .skip(desde)
+        .limit(limite)
         .exec((err, empresas) => {
             if (err) {
                 return res.status(400).json({
@@ -13,6 +21,7 @@ app.get('/empresa', (req, res) => {
                     err
                 });
             }
+            console.log(req.empresa);
             return res.status(200).json({
                 ok: true,
                 count: empresas.length,
@@ -21,20 +30,20 @@ app.get('/empresa', (req, res) => {
         });
 });
 
-app.post('/empresa', (req, res) => {
+
+app.post('/empresa/reg', (req, res) => {
     let body = req.body;
 
     let empresa = new Empresa({
         nombre: body.nombre,
-        precioUnitario: body.precioUnitario,
         direccion: body.direccion,
         email: body.email,
+        telefono: body.telefono,
         rfc: body.rfc,
-        password: body.password,
+        password: bcrypt.hashSync(body.password, 10),
         ubicacion: body.ubicacion,
-        giro: bofy.giro,
+        giro: body.giro,
         tamano: body.tamano
-
     });
 
     empresa.save((err, empDB) => {
@@ -50,13 +59,11 @@ app.post('/empresa', (req, res) => {
         });
 
     });
-
 });
-
 
 app.put('/empresa/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['direccion', 'ubicacion', 'giro','tamano']);
+    let body = _.pick(req.body, ['direccion', 'ubicacion', 'giro', 'tamano']);
 
     Empresa.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, empDB) => {
         if (err) {
@@ -75,8 +82,8 @@ app.put('/empresa/:id', (req, res) => {
 app.delete('/empresa/:id', (req, res) => {
     let id = req.params.id;
     Empresa.deleteOne({ _id: id }, (err, resp) => {
-         if (err) {
-           return res.status(400).json({
+        if (err) {
+            return res.status(400).json({
                 ok: false,
                 err
             });
@@ -87,13 +94,15 @@ app.delete('/empresa/:id', (req, res) => {
                 err: {
                     id,
                     msg: 'Empresa no encontrada'
-               }
+                }
             });
         }
-         return res.status(200).json({
+        return res.status(200).json({
             ok: true,
             resp
         });
-    });  
+
+    });
 });
+
 module.exports = app;
