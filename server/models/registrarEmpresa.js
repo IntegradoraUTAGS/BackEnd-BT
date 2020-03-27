@@ -3,7 +3,6 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 let Schema = mongoose.Schema;
 
-
 let empresaSchema = new Schema({
     nombre: {
         type: String,
@@ -19,15 +18,10 @@ let empresaSchema = new Schema({
         unique: true,
         required: [true, 'Por favor ingresa el correo electronico']
     },
-    telefono: {
-        type: String,
-        unique: true,
-        required: [true, 'Por favor ingresa el numero de telefono']
-    },
     rfc: {
         type: String,
         unique: true,
-        required: [true, 'Por favor ingresa el RFC de la empresa']
+        required: [true, 'Por favor ingresa el rfc de la empresa']
     },
     password: {
         type: String,
@@ -36,16 +30,16 @@ let empresaSchema = new Schema({
     },
     ubicacion: {
         type: String,
-        required: [true, 'Por favor ingresa  la ubicación']
+        required: [true, 'Por favor ingresa la ubicación']
     },
     giro: {
         type: String,
-        required: [true, 'Por favor ingresa  el giro']
+        required: [true, 'Por favor ingresa el giro de la empresa']
     },
     tamano: {
         type: String,
-        required: [true, 'Por favor ingresa  el tamaño']
-    },
+        required: [true, 'Por favor ingresa el tamaño de la empresa']
+    }
 
 
 });
