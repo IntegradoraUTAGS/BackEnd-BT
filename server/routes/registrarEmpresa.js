@@ -2,18 +2,10 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const app = express();
-const { verificaToken } = require('../middlewares/autenticacion');
 const Empresa = require('../models/registrarEmpresa');
 
-app.get('/empresa/obtener', (req, res) => {
-    let desde = req.params.desde || 0;
-    desde = Number(desde);
-
-    let limite = req.params.limite || 0;
-    limite = Number(limite);
-    Empresa.find({ estado: true })
-        .skip(desde)
-        .limit(limite)
+app.get('/empresa', (req, res) => {
+    Empresa.find({ disponible: true })
         .exec((err, empresas) => {
             if (err) {
                 return res.status(400).json({
@@ -21,7 +13,6 @@ app.get('/empresa/obtener', (req, res) => {
                     err
                 });
             }
-            console.log(req.empresa);
             return res.status(200).json({
                 ok: true,
                 count: empresas.length,
@@ -30,8 +21,7 @@ app.get('/empresa/obtener', (req, res) => {
         });
 });
 
-
-app.post('/empresa/reg', (req, res) => {
+app.post('/empresa/registrar', (req, res) => {
     let body = req.body;
 
     let empresa = new Empresa({
@@ -42,8 +32,9 @@ app.post('/empresa/reg', (req, res) => {
         rfc: body.rfc,
         password: bcrypt.hashSync(body.password, 10),
         ubicacion: body.ubicacion,
-        giro: body.giro,
+        giro: bofy.giro,
         tamano: body.tamano
+
     });
 
     empresa.save((err, empDB) => {
@@ -59,7 +50,9 @@ app.post('/empresa/reg', (req, res) => {
         });
 
     });
+
 });
+
 
 app.put('/empresa/:id', (req, res) => {
     let id = req.params.id;
@@ -101,8 +94,6 @@ app.delete('/empresa/:id', (req, res) => {
             ok: true,
             resp
         });
-
     });
 });
-
 module.exports = app;
