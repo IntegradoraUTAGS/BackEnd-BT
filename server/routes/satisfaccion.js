@@ -1,11 +1,11 @@
 const express = require('express');
 const _ = require('underscore');
-const Encuesta = require('../models/encuesta');
+const Satisfaccion = require('../models/satisfaccion');
 const app = express();
 
-app.get('/obtener', (req, res) => {
-    Encuesta.find()
-        .exec((err, encuesta) => {
+app.get('/obtenerSatisfaccion', (req, res) => {
+    Satisfaccion.find()
+        .exec((err, satisfaccion) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -14,36 +14,40 @@ app.get('/obtener', (req, res) => {
             }
             return res.status(200).json({
                 ok: true,
-                count: encuesta.length,
-                encuesta
+                count: satisfaccion.length,
+                satisfaccion
             })
         });
 });
 
-app.post('/registrar', (req, res) => {
+app.post('/registrarSatisfaccion', (req, res) => {
     let body = req.body;
 
     console.log(body);
 
 
-    let encuesta = new Encuesta({
+    let satisfaccion = new Satisfaccion({
         email: body.email,
         nomEmpresa: body.nomEmpresa,
         organizacion: body.organizacion,
         tamanoOrg: body.tamanoOrg,
         ubicacionEmpleo: body.ubicacionEmpleo,
-        dirigidoA: body.dirigidoA,
-        dirigidoPersona: body.dirigidoPersona,
+        carrera: body.carrera,
+        nombreAlum: body.nombreAlum,
+        perfilContrato: body.perfilContrato,
         sueldo: body.sueldo,
-        conocimiento: body.conocimiento,
+        conocimientos: body.conocimientos,
+        desempenio: body.desempenio,
         creatividad: body.creatividad,
+        capacidad: body.capacidad,
         nivelAcademico: body.nivelAcademico,
         adaptarse: body.adaptarse,
-        satisfaccion: body.satisfaccion,
+        requerimientos: body.requerimientos,
+        trabajoDesemp: body.trabajoDesemp,
         comentarios: body.comentarios
 
     });
-    encuesta.save((err, encuestaDB) => {
+    satisfaccion.save((err, satisfaccionDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -52,12 +56,12 @@ app.post('/registrar', (req, res) => {
         }
         return res.status(200).json({
             ok: true,
-            encuestaDB
+            satisfaccionDB
         });
     });
 });
 
-app.put('/actualizar', (req, res) => {
+app.put('/actualizarSatisfaccion', (req, res) => {
     let id = req.body.id;
     let body = _.pick(req.body, [
         'email',
@@ -65,19 +69,23 @@ app.put('/actualizar', (req, res) => {
         'organizacion',
         'tamanoOrg',
         'ubicacionEmpleo',
-        'dirigidoA',
-        'dirigidoPersona',
+        'carrera',
+        'nombreAlum',
+        'perfilContrato',
         'sueldo',
-        'conocimiento',
+        'conocimientos',
+        'desempenio',
         'creatividad',
+        'capacidad',
         'nivelAcademico',
         'adaptarse',
-        'satisfaccion',
+        'requerimientos',
+        'trabajoDesemp',
         'comentarios'
 
     ]);
 
-    encuesta.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, encuestaDB) => {
+    satisfaccion.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, satisfaccionDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -86,7 +94,7 @@ app.put('/actualizar', (req, res) => {
         };
         return res.status(200).json({
             ok: true,
-            encuestaDB
+            satisfaccionDB
         });
     });
 });
@@ -94,9 +102,9 @@ app.put('/actualizar', (req, res) => {
 
 
 
-app.delete('/eliminar', (req, res) => {
+app.delete('/eliminarSatisfaccion', (req, res) => {
     let id = req.body.id;
-    encuesta.findByIdAndUpdate(id, { new: true, runValidators: true, context: 'query' }, (err, encuestaDB) => {
+    satisfaccion.findByIdAndUpdate(id, { new: true, runValidators: true, context: 'query' }, (err, satisfaccionDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -105,7 +113,7 @@ app.delete('/eliminar', (req, res) => {
         }
         return res.status(200).json({
             ok: true,
-            encuestaDB
+            satisfaccionDB
         });
     });
 });
