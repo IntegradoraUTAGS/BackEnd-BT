@@ -32,7 +32,7 @@ app.post('/empresa/registrar', (req, res) => {
         rfc: body.rfc,
         password: bcrypt.hashSync(body.password, 10),
         ubicacion: body.ubicacion,
-        giro: bofy.giro,
+        giro: body.giro,
         tamano: body.tamano
 
     });
