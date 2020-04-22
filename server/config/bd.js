@@ -1,5 +1,5 @@
 // PUERTO
-process.env.PORT = process.env.PORT || 3000;
+process.env.PORT = process.env.PORT || 8099;
 //ENTORNO
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
@@ -8,7 +8,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 let urlDB;
 
 if (process.env.NODE_ENV === 'dev') {
-    urlDB = 'http://localhost:27017';
+    urlDB = 'http://172.17.1.7:8099/';
 }
 process.env.URLDB = urlDB;
 // FIRMA DE JWT
