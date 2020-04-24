@@ -24,7 +24,7 @@ app.post('/login', (req, res) => {
             return res.status(500).json({
                 ok: false,
                 err: {
-                    
+
                     message: 'El usuario y/o contraseña son incorrectos'
                 }
             });
@@ -70,7 +70,8 @@ app.post('/agregar', (req, res) => {
         usuario: body.usuario,
         correo: body.correo,
         contrasena: bcrypt.hashSync(body.contrasena, 10),
-        role: body.rol
+        role: body.role,
+        estado: body.estado
 
     });
     usuario.save((err, UsrDB) => {
@@ -89,20 +90,36 @@ app.post('/agregar', (req, res) => {
 
 });
 
-// app.get('/usuario', (req, res) => {
-//     Usuario.find({ estado: true })
-//         .exec((err, UsrDB) => {
-//             if (err) {
-//                 return res.status(400).json({
-//                     ok: false,
-//                     err
-//                 });
-//             }
-//             return res.status(200).json({
-//                 ok: true,
-//                 count: UsrDB.length,
-//                 UsrDB
-//             });
-//         });
-// });
+app.get('/usuario', (req, res) => {
+    Usuario.find({ estado: true })
+        .exec((err, UsrDB) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+            return res.status(200).json({
+                ok: true,
+                count: UsrDB.length,
+                UsrDB
+            });
+        });
+});
+app.delete('/usuario', (req, res) => {
+    let nombre = req.body.nombre;
+
+    Usuario.findOneAndUpdate({ nombre: nombre }, { estado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        };
+        return res.status(200).json({
+            ok: true,
+            resp
+        });
+    });
+});
 module.exports = app;

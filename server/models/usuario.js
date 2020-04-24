@@ -27,6 +27,10 @@ let usuarioSchema = new schema({
     role: {
         type: String,
         default: 'USER_ROLE'
+    },
+    estado: {
+        type: Boolean,
+        default: true
     }
 
 });
