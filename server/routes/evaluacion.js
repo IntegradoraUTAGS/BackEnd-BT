@@ -3,6 +3,12 @@ const _ = require('underscore');
 const Evaluacion = require('../models/evaluacion');
 const app = express();
 
+const multipart = require('connect-multiparty');
+// const multiPartMiddleware = multipart({
+//     uploadDir: './subidas'
+
+
+// });
 app.get('/obtener', (req, res) => {
     Evaluacion.find()
         .exec((err, evaluacion) => {
@@ -33,11 +39,13 @@ app.post('/registrar', (req, res) => {
 
 
     });
+
     evaluacion.save((err, evaluacionDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
                 err
+
             });
         }
         return res.status(200).json({
@@ -61,5 +69,13 @@ app.delete('/eliminar', (req, res) => {
         });
     });
 });
+
+// app.post('/api/subis', multiPartMiddleware, (req, res) => {
+// res.json({
+
+//     'message': 'Fichero subido correctamente'
+// });
+// });
+
 
 module.exports = app
